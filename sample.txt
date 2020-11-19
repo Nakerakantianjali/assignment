@@ -1,0 +1,17 @@
+/*Create a class in a package yourname.assignment.data containing an int and a char member variables that are not initialized, add a method to print these variables. Add another method in the same class with two local variables and print their values without initializing them.
+*/
+package Anjali.assignment.data;
+
+public class Sample {
+    int a;
+    char b;
+    void print(){
+        System.out.println(a+ " "+b);
+    }
+    void printlLocalVar(){
+        int c;
+        char d;
+	/*throws an compiler error while printing variable c and d are not intialized because c and d are local variable which are not initialized by default so they should be assigned a value before they are used for first time*/ 
+        System.out.println("local variable "+c+ " " d);
+    }
+}
