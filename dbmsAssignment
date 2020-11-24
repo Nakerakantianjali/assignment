@@ -1,0 +1,61 @@
+
+
+1)Find out the PG-13 rated comedy movies. DO NOT use the film_list table
+
+SELECT f.film_id, f.title,f.rating ,c.name FROM sakila.category c,sakila.film_category fc,sakila.film f where f.film_id=fc.film_id and fc.category_id=c.category_id and c.name='comedy' and rating='pg-13';
+
+
+3. Find out the list of customers from India who have rented sports movies.
+
+SELECT  cust.first_name,con.country,f.title,c.name FROM sakila.address a,sakila.city city,sakila.country con,sakila.customer cust, sakila.rental r , sakila.inventory i,sakila.film f,sakila.film_category fc ,sakila.category c where r.customer_id=cust.customer_id and r.inventory_id=i.inventory_id and i.film_id=fc.film_id and fc.category_id=c.category_id and c.name='sports' and  cust.address_id=a.address_id and a.city_id=city.city_id and city.country_id=con.country_id and con.country='india' ;
+
+
+4. Find out the list of customers from Canada who have rented “NICK WAHLBERG” movies.
+
+SELECT * FROM sakila.actor a ,sakila.customer_list c,sakila.film_actor fa,sakila.inventory i,sakila.rental r  where r.customer_id=c.id and c.country='canada'and a.first_name='NICK' and a.last_name='WAHLBERG'  and a.actor_id=fa.actor_id and fa.film_id=i.film_id and i.inventory_id=r.inventory_id ;
+
+
+5. Find out the number of movies in which “SEAN WILLIAMS” acted.
+
+select * from sakila.film_actor fa,sakila.actor a where a.first_name='SEAN' and a.last_name='WILLIAMS' and fa.film_id=a.actor_id;
+
+
+Assignment 2:
+
+1. Find out the number of documentaries with deleted scenes.
+
+select count(distinct f.film_id) from sakila.film f,sakila.film_category fc, sakila.category c where f.film_id=fc.film_id and fc.category_id= c.category_id and c.name='documentary' and f.special_features like '%Deleted Scenes%';
+
+
+2. Find out the number of sci-fi movies rented by the store managed by Jon Stephens.
+
+select count(distinct fl.fid) from sakila.rental r,sakila.staff staff,sakila.store store,sakila.inventory i,sakila.film_list fl where store.manager_staff_id=staff.staff_id and staff.first_name='Jon' and staff.last_name='Stephens' and  staff.staff_id=r.staff_id and r.inventory_id=i.inventory_id  and i.film_id=fl.fid and fl.category='sci-fi';
+
+ 
+ 3. Find out the total sales from Animation movies.
+
+ SELECT total_sales FROM sakila.sales_by_film_category where category='Animation';
+ 
+ 4. Find out the top 3 rented category of movies  by “PATRICIA JOHNSON”.
+
+SELECT 
+    fl.category, COUNT(ALL fl.category)
+FROM
+   sakila.film_list fl,
+    sakila.inventory i,
+  sakila.rental r,sakila.customer_list cl
+  where cl.name='PATRICIA JOHNSON' and fl.FID = i.film_id
+        AND cl.id = r.customer_id and r.inventory_id=i.inventory_id 
+GROUP BY fl.category order by  count(ALL fl.category) desc limit 3;
+
+
+
+ 
+ 5. Find out the number of R rated movies rented by “SUSAN WILSON”.
+ 
+select count(Distinct f.film_id) from sakila.customer_list cl,sakila.inventory i,sakila.rental r,sakila.customer c, sakila.film f  where cl.name='SUSAN WILSON' and r.customer_id=cl.id and r.inventory_id=i.inventory_id and i.film_id=f.film_id and f.rating='R' ;
+
+
+
+
+
