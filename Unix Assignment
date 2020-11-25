@@ -1,0 +1,37 @@
+
+Question
+
+Look at the following command and explain what it does by going through the documentation of each of the individual commands. Use the tools you've learned in the previous lesson to figure out step by step what is happening in the following.
+
+curl -s http://public-dns.info/nameserver/br.csv | cut -d, -f1 | shuf | tail -n 50 | xargs -i timeout 1 ping -c1 -w 1 {} | grep "time=" | awk '{print substr($7, 6, length($7)) " " substr($4, 1, length($4) -1)}' | sort -n | awk '{print $2 " " $1 "ms"}' | head -n 10
+
+
+Explanation:
+
+curl : Curl command displays  the content of the URL on the terminal
+cut : command print the selected part of line form given input
+	-d used to represent deliminator','
+	-f used to select the field
+	
+shuf  : it suffles the output
+tail -n 50 : it prints last 50 Ipaddress
+xargs -i timeout 1 ping -c1 -w 1 {} : xargs is used to read input i.e it reads 50 ipaddress and 
+	-i replaces the initial argument with current argunt i.e(reads line by line), ping help 		in testing the ip address by sending packets -c1 indicate only 1 packet, -timeout 		indicatte time out in one second {} indiacte input is not specified
+grep "time=" : this will fileter the output for pattern "time="
+awk '{print substr($7, 6, length($7)) " " substr($4, 1, length($4) -1)}': it takes input and print 7 field starting from 6 th position to length of the 7th field (i.e time),and it gives space and prints 4 field(i.e IPaddress) staring from 6th position to the length of the 4th field -1 (i.e ':' will be removed ) 
+sort -n : it will sort numerical value, this it will sort on first field i.e time
+awk '{print $2 " " $1 "ms"}': it prints 2nd field space first field and prints ms
+head -n 5 : it prints first 10 lines 
+
+
+out put:
+177.184.131.54 295ms
+177.184.131.54 295ms
+138.36.1.131 329ms
+138.36.1.14 337ms
+200.169.8.1 347ms
+186.219.160.7 358ms
+177.69.96.187 359ms
+177.47.128.2 361ms
+177.47.128.2 361ms
+
