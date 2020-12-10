@@ -82,6 +82,7 @@ Class Assignment4{
     Public Static void main(String[] args)throws IOException{
 	Assignment4 ass=new Assignment4();
 	BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+	 String input=br.readLine(); 
 	System.out.println(ass.findRange(input));
 
   }
