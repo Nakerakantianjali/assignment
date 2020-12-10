@@ -7,8 +7,8 @@ public class Main {
 
     public static  void main(String[] args) throws IOException {
 	    //get home directory		
-            String str=System.getProperty("user.home");
-            File directory=new File(str);
+            String homeDirectory=System.getProperty("user.home");
+            File directory=new File(homeDirectory);
             File[]files=directory.listFiles();
 	   //pattern that need to be matched
            String pattern = "[^.]*.java";
